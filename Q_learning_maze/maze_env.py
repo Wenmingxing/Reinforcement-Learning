@@ -17,8 +17,8 @@ import time
 
 
 UNIT = 40   # pixels
-MAZE_H = 4  # grid height
-MAZE_W = 4  # grid width
+MAZE_H = 10  # grid height
+MAZE_W = 10 # grid width
 
 
 class Maze(tk.Tk, object):
@@ -46,21 +46,99 @@ class Maze(tk.Tk, object):
         # create origin
         origin = np.array([20, 20])
 
-        # hell
-        hell1_center = origin + np.array([UNIT * 2, UNIT])
-        self.hell1 = self.canvas.create_rectangle(
+        # hell1 group 1
+        hell1_center = origin + np.array([UNIT * 2, UNIT * 2])
+        self.hell11 = self.canvas.create_rectangle(
             hell1_center[0] - 15, hell1_center[1] - 15,
-            hell1_center[0] + 15, hell1_center[1] + 15,
+            hell1_center[0] + 15, hell1_center[1] + 15 ,
             fill='black')
-        # hell
-        hell2_center = origin + np.array([UNIT, UNIT * 2])
-        self.hell2 = self.canvas.create_rectangle(
+        self.hell12 = self.canvas.create_rectangle(
+            hell1_center[0] - 15 + UNIT, hell1_center[1] - 15 ,
+            hell1_center[0] + 15 + UNIT, hell1_center[1] + 15 ,
+            fill = 'black')
+        self.hell13 = self.canvas.create_rectangle(
+            hell1_center[0] - 15 + UNIT * 2, hell1_center[1] - 15 ,
+            hell1_center[0] + 15 + UNIT * 2, hell1_center[1] + 15 ,
+            fill = 'black')
+        self.hell14 = self.canvas.create_rectangle(
+            hell1_center[0] - 15 + UNIT * 3, hell1_center[1] - 15 ,
+            hell1_center[0] + 15 + UNIT * 3, hell1_center[1] + 15 ,
+            fill = 'black')
+        self.hell15 = self.canvas.create_rectangle(
+            hell1_center[0] - 15 + UNIT * 4, hell1_center[1] - 15 ,
+            hell1_center[0] + 15 + UNIT * 4, hell1_center[1] + 15 ,
+            fill = 'black')
+        # hell Group 2
+        hell2_center = origin + np.array([UNIT * 7, UNIT * 5])
+        self.hell21 = self.canvas.create_rectangle(
             hell2_center[0] - 15, hell2_center[1] - 15,
-            hell2_center[0] + 15, hell2_center[1] + 15,
+            hell2_center[0] + 15 , hell2_center[1] + 15 ,
             fill='black')
-
+        self.hell22 = self.canvas.create_rectangle(
+            hell2_center[0] - 15 + UNIT, hell2_center[1] - 15,
+            hell2_center[0] + 15 + UNIT , hell2_center[1] + 15,
+            fill='black')
+        self.hell23 = self.canvas.create_rectangle(
+            hell2_center[0] - 15 + UNIT * 2, hell2_center[1] - 15,
+            hell2_center[0] + 15 + UNIT * 2, hell2_center[1] + 15,
+            fill='black')
+        '''self.hell24 = self.canvas.create_rectangle(
+            hell2_center[0] - 15 , hell2_center[1] - 15 + UNIT,
+            hell2_center[0] + 15  , hell2_center[1] + 15 + UNIT,
+            fill='black')
+        self.hell25 = self.canvas.create_rectangle(
+            hell2_center[0] - 15 , hell2_center[1] - 15 + UNIT * 2,
+            hell2_center[0] + 15  , hell2_center[1] + 15 + UNIT * 2,
+            fill='black')
+        self.hell26 = self.canvas.create_rectangle(
+            hell2_center[0] - 15 + UNIT, hell2_center[1] - 15 + UNIT,
+            hell2_center[0] + 15 + UNIT , hell2_center[1] + 15 + UNIT,
+            fill='black')
+        self.hell27 = self.canvas.create_rectangle(
+            hell2_center[0] - 15 + UNIT * 2, hell2_center[1] - 15 + UNIT,
+            hell2_center[0] + 15 + UNIT * 2, hell2_center[1] + 15 + UNIT,
+            fill='black')
+        self.hell28 = self.canvas.create_rectangle(
+            hell2_center[0] - 15 + UNIT, hell2_center[1] - 15 + UNIT * 2,
+            hell2_center[0] + 15 + UNIT , hell2_center[1] + 15 + UNIT * 2,
+            fill='black')
+        self.hell29 = self.canvas.create_rectangle(
+            hell2_center[0] - 15 + UNIT * 2, hell2_center[1] - 15 + UNIT * 2,
+            hell2_center[0] + 15 + UNIT * 2, hell2_center[1] + 15 + UNIT * 2,
+            fill='black')
+            '''
+        # hell group 3
+        hell3_center = origin + np.array([UNIT * 5, UNIT * 8])
+        self.hell31 = self.canvas.create_rectangle(
+            hell3_center[0] - 15,hell3_center[1] - 15,
+            hell3_center[0]+15,hell3_center[1]+15,
+            fill='black')
+        self.hell32 = self.canvas.create_rectangle(
+            hell3_center[0] - 15,hell3_center[1] - 15 + UNIT,
+            hell3_center[0]+15,hell3_center[1]+15 + UNIT,
+            fill='black')      
+        
+        '''# hell  group 4
+        hell4_center = origin + np.array([UNIT * 14, UNIT * 6])
+        self.hell41 = self.canvas.create_rectangle(
+            hell4_center[0] - 15, hell4_center[1] - 15,
+            hell4_center[0] + 15 , hell4_center[1] + 15,
+            fill='black')
+        self.hell42 = self.canvas.create_rectangle(
+            hell4_center[0] - 15,hell4_center[1] - 15 + UNIT,
+            hell4_center[0] + 15, hell4_center[1] + 15 + UNIT,
+            fill='black')
+        self.hell43 = self.canvas.create_rectangle(
+            hell4_center[0] - 15,hell4_center[1] - 15 + UNIT * 2,
+            hell4_center[0] + 15, hell4_center[1] + 15 + UNIT * 2,
+            fill='black')
+        self.hell44 = self.canvas.create_rectangle(
+            hell4_center[0] - 15,hell4_center[1] - 15 + UNIT * 3,
+            hell4_center[0] + 15, hell4_center[1] + 15 + UNIT * 3,
+            fill='black')
+        '''
         # create oval
-        oval_center = origin + UNIT * 2
+        oval_center = origin + UNIT * 9
         self.oval = self.canvas.create_oval(
             oval_center[0] - 15, oval_center[1] - 15,
             oval_center[0] + 15, oval_center[1] + 15,
@@ -109,16 +187,19 @@ class Maze(tk.Tk, object):
 
         # reward function
         if s_ == self.canvas.coords(self.oval):
-            reward = 1
+            reward = 10
             done = True
-        elif s_ in [self.canvas.coords(self.hell1), self.canvas.coords(self.hell2)]:
-            reward = -1
+            Goal_end = True
+        elif s_ in [self.canvas.coords(self.hell11), self.canvas.coords(self.hell12),self.canvas.coords(self.hell13),self.canvas.coords(self.hell14),self.canvas.coords(self.hell15),self.canvas.coords(self.hell21),self.canvas.coords(self.hell22),self.canvas.coords(self.hell23),self.canvas.coords(self.hell31),self.canvas.coords(self.hell32)]:
+         
+            reward = -10
             done = True
+            Goal_end = False
         else:
             reward = 0
             done = False
-
-        return s_, reward, done
+            Goal_end = False
+        return s_, reward, done, Goal_end
 
     def render(self):
         time.sleep(0.1)

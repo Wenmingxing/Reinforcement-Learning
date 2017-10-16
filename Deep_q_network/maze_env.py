@@ -95,7 +95,7 @@ class Maze(tk.Tk):
 		if next_coords == self.canvas.coords(self.oval):
 			reward = 1
 			done =True
-		elif next_coords in [self.canvas.coords(slef.hell1)]:
+		elif next_coords in [self.canvas.coords(self.hell1)]:
 			reward = -1
 			done = True
 		else:

@@ -5,7 +5,7 @@ Coded by luke on 11th 2017
 
 This part of code is the DQN brain, which is a brain of the agent. All decision are made in here.
 
-The neural network is build by tensorflow
+The neural network is built by tensorflow
 
 '''
 
@@ -63,35 +63,35 @@ class DeepQNetwork:
 			with tf.variable_scope('l1'):
 				w1 = tf.get_variable('w1',[self.n_features,n_l1],initializer=w_initializer,collections=c_names)
 				b1 = tf.get_variable('b1',[1,n_l1],initializer=b_initializer,collections=c_names)
-				l1 = tf.nn.relu(tf.matmul(self.s,w1)+b1)
+				l1 = tf.nn.relu(tf.matmul(self.s, w1) + b1)
 			# second layer. collections is used later when assign to target net
 			with tf.variable_scope('l2'):
 				w2 = tf.get_variable('w2',[n_l1,self.n_actions],initializer=w_initializer,collections=c_names)
 				b2 = tf.get_variable('b2',[1,self.n_actions],initializer=b_initializer,collections=c_names)
 				self.q_eval = tf.matmul(l1,w2) + b2	
 
-			with tf.variable_scope('loss'):
-				self.loss = tf.reduce_mean(tf.squared_difference(self.q_target,self.q_eval))
-			with tf.variable_scope('train'):
-				self._train_op = tf.train.RMSPropOptimizer(self.lr).minimize(self.loss)
+		with tf.variable_scope('loss'):
+			self.loss = tf.reduce_mean(tf.squared_difference(self.q_target,self.q_eval))
+		with tf.variable_scope('train'):
+			self._train_op = tf.train.RMSPropOptimizer(self.lr).minimize(self.loss)
 
-			#----build the target_net
+		#----build the target_net
 			self.s_ = tf.placeholder(tf.float32,[None,self.n_features],name='s_') # input
-			with tf.variable_scope('target_net'):
-				# c_names(colletion names) are the collection to store variables
-				c_names = ['target_net_params',tf.GraphKeys.GLOBAL_VARIABLES]
+		with tf.variable_scope('target_net'):
+			# c_names(colletion names) are the collection to store variables
+			c_names = ['target_net_params',tf.GraphKeys.GLOBAL_VARIABLES]
 
-				# First layer. Collection is used later when assign to target net
-				with tf.variable_scope('l1'):
-					w1 = tf.get_variable('w1',[self.n_features,n_l1],initializer=w_initializer,collections=c_names)
-					b1 = tf.get_variable('b1',[1,n_l1],initializer=b_initializer,collections=c_names)
-					l1 = tf.nn.relu(tf.matmul(self.s_,w1) + b1)
+			# First layer. Collection is used later when assign to target net
+			with tf.variable_scope('l1'):
+				w1 = tf.get_variable('w1',[self.n_features,n_l1],initializer=w_initializer,collections=c_names)
+				b1 = tf.get_variable('b1',[1,n_l1],initializer=b_initializer,collections=c_names)
+				l1 = tf.nn.relu(tf.matmul(self.s_,w1) + b1)
 
-				# second layer. collections is used later when assign to target net
-				with tf.variable_scope('l2'):
-					w2 = tf.get_variable('w2',[n_l1,self.n_actions],initializer=w_initializer,collections=c_names)
-					b2 = tf.get_variable('b2',[1,self.n_actions],initializer=b_initializer,collections=c_names)
-					self.q_next = tf.matmul(self.s_,w2) + b2
+			# second layer. collections is used later when assign to target net
+			with tf.variable_scope('l2'):
+				w2 = tf.get_variable('w2',[n_l1,self.n_actions],initializer=w_initializer,collections=c_names)
+				b2 = tf.get_variable('b2',[1,self.n_actions],initializer=b_initializer,collections=c_names)
+				self.q_next = tf.matmul(l1,w2) + b2
 
 
 	def store_transition(self,s,a,r,s_):
@@ -136,8 +136,7 @@ class DeepQNetwork:
 		batch_memory = self.memory[sample_index,:]
 
 
-		q_next,q_eval=self.sess.run([self.q_next,self.q_eval],feed_dict={self.s_:batch_memory[:,-self.n_features:],\
-			self.s: batch_memory[:,:self.n_features]})
+		q_next,q_eval=self.sess.run([self.q_next,self.q_eval],feed_dict={self.s_:batch_memory[:,-self.n_features:],self.s: batch_memory[:,:self.n_features]})
 
 		# change q_target w.r.t q_eval's action
 		q_target = q_eval.copy()
@@ -171,14 +170,13 @@ class DeepQNetwork:
         """
 
         # train eval network
-        _, self.cost = self.sess.run([self._train_op, self.loss],\
-        	feed_dict={self.s: batch_memory[:, :self.n_features],\
-        	self.q_target: q_target})
-        self.cost_his.append(self.cost)
+		_, self.cost = self.sess.run([self._train_op, self.loss],feed_dict={self.s: batch_memory[:, :self.n_features],self.q_target: q_target} )
 
-        # increasing epsilon
-        self.epsilon = self.epsilon + self.epsilon_increment if self.epsilon < self.epsilon_max else self.epsilon_max
-        self.learn_step_counter += 1
+		self.cost_his.append(self.cost)
+
+		# increasing epsilon
+		self.epsilon = self.epsilon + self.epsilon_increment if self.epsilon < self.epsilon_max else self.epsilon_max
+		self.learn_step_counter += 1
 
 
 	def plot_cost(self):
