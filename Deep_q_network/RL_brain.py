@@ -76,7 +76,7 @@ class DeepQNetwork:
 			self._train_op = tf.train.RMSPropOptimizer(self.lr).minimize(self.loss)
 
 		#----build the target_net
-			self.s_ = tf.placeholder(tf.float32,[None,self.n_features],name='s_') # input
+		self.s_ = tf.placeholder(tf.float32,[None,self.n_features],name='s_') # input
 		with tf.variable_scope('target_net'):
 			# c_names(colletion names) are the collection to store variables
 			c_names = ['target_net_params',tf.GraphKeys.GLOBAL_VARIABLES]
@@ -101,6 +101,7 @@ class DeepQNetwork:
 		transition = np.hstack((s,[a,r],s_))
 		# replace the old memory with new memory 
 		index = self.memory_counter % self.memory_size
+		self.memory[index,:] = transition
 		self.memory_counter += 1
 
 	def choose_action(self,observation):
